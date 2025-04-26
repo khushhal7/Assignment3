@@ -22,8 +22,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     bat """
-                        echo %PASSWORD% | docker login -u %USERNAME% --password-stdin
-                        docker push %DOCKER_IMAGE%
+                         docker login -u %USERNAME% -p %PASSWORD%
                     """
                 }
             }
