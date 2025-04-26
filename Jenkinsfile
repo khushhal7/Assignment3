@@ -11,18 +11,18 @@ pipeline {
                 git 'https://github.com/khushhal7/Assignment3' // Change to your repo
             }
         }
-        
+
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t %DOCKER_IMAGE% .'
             }
         }
-        
+
         stage('Push Docker Image to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     bat """
-                        echo %PASSWORD% | docker login -u %USERNAME% --password-stdin
+                        docker login -u %USERNAME% -p %PASSWORD%
                         docker push %DOCKER_IMAGE%
                     """
                 }
