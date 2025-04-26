@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'khushhal1/simple-node-app' // Replace with your Docker Hub username
+        DOCKER_IMAGE = 'khushhal1/simple-node-app' // Your DockerHub image name
     }
 
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/khushhal7/Assignment3' // Change to your repo
+                git 'https://github.com/khushhal7/Assignment3'
             }
         }
         
@@ -22,8 +22,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     bat """
-                          echo %PASSWORD% | docker login -u khushhal1 --password-stdin
-                          docker push khushhal1/simple-node-app
+                        docker login -u %USERNAME% -p %PASSWORD%
+                        docker push %DOCKER_IMAGE%
                     """
                 }
             }
