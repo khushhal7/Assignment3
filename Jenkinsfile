@@ -22,7 +22,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     bat """
-                         docker login -u %USERNAME% -p %PASSWORD%
+                          echo %PASSWORD% | docker login -u khushhal1 --password-stdin
+                          docker push khushhal1/simple-node-app
                     """
                 }
             }
